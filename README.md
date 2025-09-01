@@ -36,19 +36,51 @@ Note: Visualization and downstream plotting (e.g., community analysis, phylogene
 
 
 ## Workflow Outline
-0. **QC and trimming**: `fastp`   
-1. **Assemble snail mtDNA**: NOVOPlasty 
-2. **Locate COX1 start**: MITOS → reorder assemblies to begin with COX1  
-3. **Confirm assembly**: BLAST ~600 bp COX1 fragment to verify snail identity  
-4. **Index assembly**: prepare for mapping (`index.array`)  
-5. **Map reads**: align to mtDNA, produce BAM, estimate % snail reads (`align.bam.array`)  
-6. **Export unmapped**: obtain all non-mtDNA reads (`export unmapped sequences`)  
-7. **Build BLAST DB**: `makeblastdb`  
-8. **Identify non-snail COX1**: `tblastn` vs unmapped reads  
-9. **Split & rename hits**: prepare FASTA subsets  
-10. **Taxonomic assignment**: `blastn.array` vs reduced NCBI mtDNA database (top hit kept)  
-11. **Consolidate & filter**: keep best hits, generate summary table  
-12–13. **Downstream analysis**: Excel/R scripts for taxonomy, community composition, phylogeny  
+## Workflow Outline
+
+1. **Quality control and assembly**  
+   - Raw sequencing reads were trimmed and filtered using **fastp**.  
+   - Snail mitochondrial genomes were then assembled de novo with **NOVOPlasty**.  
+
+2. **COX1 start-site standardization**  
+   - Initial assemblies were annotated with **MITOS** to locate the COX1 gene.  
+   - Sequences were reordered so that each genome began with the COX1 start codon.  
+
+3. **Assembly verification**  
+   - Approximately 600 bp of the COX1 region was queried with **BLASTn** to confirm species identity.  
+
+4. **Indexing**  
+   - Verified mitochondrial genomes were indexed to prepare for downstream read mapping.  
+
+5. **Read mapping**  
+   - Whole-genome reads were aligned to the assembled mtDNA to generate BAM files.  
+   - Mapping rates were calculated to estimate the proportion of snail mtDNA.  
+
+6. **Extraction of unmapped reads**  
+   - Reads not aligning to snail mtDNA were exported and converted into FASTA format.  
+
+7. **Local BLAST database construction**  
+   - Unmapped reads were formatted into searchable databases using **makeblastdb**.  
+
+8. **Identification of non-snail COX1 fragments**  
+   - Known COX1 protein sequences were searched against unmapped read databases with **tblastn**.  
+   - Candidate non-snail COX1-like sequences were extracted.  
+
+9. **Sequence extraction**  
+   - tblastn hits were compiled into FASTA files for downstream analysis.  
+
+10. **Taxonomic assignment**  
+    - Extracted sequences were compared against a reduced NCBI mtDNA database using **BLASTn**.  
+    - The top hit for each sequence was retained for species-level classification.  
+
+11. **Filtering and consolidation**  
+    - BLAST outputs were curated to retain the best matches.  
+    - Structured summary tables of sequence classifications were generated.  
+
+12. **Taxonomic and ecological annotation**  
+    - Sequences were annotated with Phylum, Class, and Order information.  
+    - Each taxon was further grouped into ecological categories (e.g., dietary, parasitic, environmental).  
+  
 
 ---
 
