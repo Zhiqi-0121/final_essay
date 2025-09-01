@@ -36,7 +36,7 @@ Note: Visualization and downstream plotting (e.g., community analysis, phylogene
 
 
 ## Workflow Outline
-## Workflow Outline
+
 
 1. **Quality control and assembly**  
    - Raw sequencing reads were trimmed and filtered using **fastp**.  
